@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Pin</title>
+  <style>
+    body { font: 14px system-ui, sans-serif; margin: 0; padding: 14px 16px; width: 240px; color: #111; background: #fff; }
+    h1 { font-size: 16px; margin: 0 0 10px; }
+    h1 small { font-weight: normal; color: #767676; font-size: 12px; }
+    label { display: flex; align-items: center; gap: 8px; margin: 8px 0; cursor: pointer; }
+    #contagem { margin-top: 12px; padding-top: 10px; border-top: 1px solid #eee; color: #444; }
+    #contagem strong { color: #e60023; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #1e1e1e; color: #eee; }
+      #contagem { border-color: #333; color: #bbb; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Pin <small id="versao"></small></h1>
+  <label><input type="checkbox" id="ligado"> Esconder anúncios</label>
+  <label><input type="checkbox" id="marcar"> Só marcar (não esconder)</label>
+  <div id="contagem">Abra o Pinterest para ver a contagem.</div>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+.pin-sem-anuncio-oculto {
+  display: none !important;
+}
+
+.pin-sem-anuncio-marcado {
+  outline: 4px solid #e60023 !important;
+  outline-offset: -4px;
+  opacity: 0.35 !important;
+}

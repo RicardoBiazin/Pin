@@ -1,0 +1,15 @@
+{
+  "name": "pin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Extensão Chrome/Edge que esconde os anúncios (Pins promovidos) do Pinterest",
+  "scripts": {
+    "test": "node --test test/",
+    "icones": "node scripts/gerar-icones.js",
+    "empacotar": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/empacotar.ps1"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "jsdom": "^30.1.3"
+  }
+}

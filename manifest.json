@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Pin — Pinterest sem anúncios",
+  "short_name": "Pin",
+  "version": "0.1.0",
+  "description": "Esconde os Pins promovidos (anúncios) do Pinterest. Não coleta dados nem acessa a rede.",
+  "permissions": ["storage"],
+  "icons": { "16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png" },
+  "action": {
+    "default_title": "Pin",
+    "default_popup": "src/popup.html",
+    "default_icon": { "16": "icons/16.png", "48": "icons/48.png" }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.pinterest.com/*", "*://*.pinterest.com.br/*", "*://pinterest.com/*"],
+      "js": ["src/detector.js", "src/content.js"],
+      "css": ["src/content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

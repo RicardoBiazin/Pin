@@ -1,0 +1,56 @@
+<!-- Grade sintética no formato do feed do Pinterest (data-grid-item por cartão).
+     data-esperado diz o que o teste espera de cada cartão. -->
+<div role="list" class="grade">
+  <div data-grid-item="true" data-esperado="normal" id="normal-1">
+    <div data-test-id="pinWrapper"><div data-test-id="pin">
+      <a href="/pin/123/"><img src="a.jpg" alt="Bolo de cenoura"></a>
+      <div><span>Bolo de cenoura fofinho</span></div>
+    </div></div>
+  </div>
+
+  <div data-grid-item="true" data-esperado="anuncio" id="promovido-ptbr">
+    <div data-test-id="pinWrapper"><div data-test-id="pin">
+      <a href="/pin/456/"><img src="b.jpg" alt="Tênis"></a>
+      <div><span>Promovido por</span> <a href="/lojax/"><span>Loja X</span></a></div>
+    </div></div>
+  </div>
+
+  <div data-grid-item="true" data-esperado="anuncio" id="promovido-en">
+    <div data-test-id="pinWrapper"><div data-test-id="pin">
+      <a href="/pin/789/"><img src="c.jpg"></a>
+      <div><span>Promoted by</span><span>Brand Y</span></div>
+    </div></div>
+  </div>
+
+  <div data-grid-item="true" data-esperado="anuncio" id="promovido-atributo">
+    <div data-test-id="pinWrapper"><div data-test-id="oneTapPromotedPin">
+      <a href="/pin/111/"><img src="d.jpg"></a>
+    </div></div>
+  </div>
+
+  <div data-grid-item="true" data-esperado="anuncio" id="promovido-aria">
+    <div data-test-id="pinWrapper"><div data-test-id="pin" aria-label="Patrocinado">
+      <a href="/pin/222/"><img src="e.jpg"></a>
+    </div></div>
+  </div>
+
+  <div data-grid-item="true" data-esperado="anuncio" id="promovido-link">
+    <div data-test-id="pinWrapper"><div data-test-id="pin">
+      <a href="https://loja.example/produto?utm_source=pinterest&utm_medium=paid"><img src="f.jpg"></a>
+    </div></div>
+  </div>
+
+  <div data-grid-item="true" data-esperado="normal" id="normal-titulo-patrocinado">
+    <div data-test-id="pinWrapper"><div data-test-id="pin">
+      <a href="/pin/333/"><img src="g.jpg"></a>
+      <div><span>Como conseguir um evento patrocinado pela prefeitura</span></div>
+    </div></div>
+  </div>
+
+  <div data-grid-item="true" data-esperado="normal" id="normal-header">
+    <div data-test-id="pinWrapper"><div data-test-id="pin" aria-label="Pin de Maria">
+      <a href="/pin/444/"><img src="h.jpg"></a>
+      <div data-test-id="pinrep-footer"><span>Maria</span></div>
+    </div></div>
+  </div>
+</div>
