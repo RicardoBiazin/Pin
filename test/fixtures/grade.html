@@ -1,5 +1,6 @@
 <!-- Grade sintética no formato do feed do Pinterest (data-grid-item por cartão).
-     data-esperado diz o que o teste espera de cada cartão. -->
+     data-esperado diz o que o teste espera de cada cartão; data-ia="sim" marca
+     os que levam o selo "Modificado por IA". -->
 <div role="list" class="grade">
   <div data-grid-item="true" data-esperado="normal" id="normal-1">
     <div data-test-id="pinWrapper"><div data-test-id="pin">
@@ -51,6 +52,37 @@
     <div data-test-id="pinWrapper"><div data-test-id="pin" aria-label="Pin de Maria">
       <a href="/pin/444/"><img src="h.jpg"></a>
       <div data-test-id="pinrep-footer"><span>Maria</span></div>
+    </div></div>
+  </div>
+
+  <!-- Selo copiado do Pinterest em 28/10/2026 (classes com hash mudam; o
+       detector usa só texto e title). -->
+  <div data-grid-item="true" data-esperado="normal" data-ia="sim" id="ia-ptbr">
+    <div data-test-id="pinWrapper"><div data-test-id="pin">
+      <a href="/pin/555/"><img src="i.jpg"></a>
+      <div class="light_1h alignStart_1q breakWord_1q lineClamp_1q TextBody_1h antialiased_1q size_300_1h size_300_default_1h" title="Modificado por IA" style="-webkit-line-clamp: 1;">Modificado por IA</div>
+    </div></div>
+  </div>
+
+  <div data-grid-item="true" data-esperado="normal" data-ia="sim" id="ia-en-title">
+    <div data-test-id="pinWrapper"><div data-test-id="pin">
+      <a href="/pin/666/"><img src="j.jpg"></a>
+      <div title="AI modified"><svg></svg></div>
+    </div></div>
+  </div>
+
+  <div data-grid-item="true" data-esperado="normal" id="normal-titulo-ia">
+    <div data-test-id="pinWrapper"><div data-test-id="pin">
+      <a href="/pin/777/"><img src="k.jpg"></a>
+      <div><span>Arte modificado por IA para quarto infantil</span></div>
+    </div></div>
+  </div>
+
+  <div data-grid-item="true" data-esperado="anuncio" data-ia="sim" id="anuncio-e-ia">
+    <div data-test-id="pinWrapper"><div data-test-id="pin">
+      <a href="/pin/888/"><img src="l.jpg"></a>
+      <div><span>Promovido por</span><span>Loja Z</span></div>
+      <div title="Modificado por IA">Modificado por IA</div>
     </div></div>
   </div>
 </div>

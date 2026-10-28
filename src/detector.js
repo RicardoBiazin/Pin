@@ -1,4 +1,4 @@
-// Detecção de Pins promovidos. Funções puras sobre o DOM, sem chrome.*,
+// Detecção de Pins promovidos e de Pins que o Pinterest marca como IA. Funções puras sobre o DOM, sem chrome.*,
 // para rodar igual no navegador e nos testes (jsdom).
 (function (raiz) {
   'use strict';
@@ -10,6 +10,20 @@
     'promoted by',
     'promoted',
     'sponsored',
+  ];
+
+  // Selo "Modificado por IA" que o Pinterest põe no pin. Comparação exata:
+  // um título como "Arte gerada por IA para quarto" não conta.
+  const ROTULOS_IA = [
+    'modificado por ia',
+    'modificado com ia',
+    'gerado por ia',
+    'criado com ia',
+    'ai modified',
+    'ai-modified',
+    'modified with ai',
+    'ai generated',
+    'ai-generated',
   ];
 
   const ATRIBUTOS_ANUNCIO = /promoted|sponsor|\bads?\b|-ad-|_ad_|adslot|ad-?unit/i;
@@ -34,7 +48,11 @@
     return ROTULOS.some((r) => t === r || t.startsWith(r + ' '));
   }
 
-  function temRotuloVisivel(cartao) {
+  function textoEhRotuloIA(texto) {
+    return ROTULOS_IA.includes(normalizar(texto));
+  }
+
+  function temRotuloVisivel(cartao, ehRotulo = textoEhRotulo) {
     const nos = cartao.querySelectorAll('span, div, a, p');
     for (const no of nos) {
       // Só folhas de texto: o próprio nó tem texto direto.
@@ -42,7 +60,7 @@
       for (const filho of no.childNodes) {
         if (filho.nodeType === 3) direto += filho.nodeValue;
       }
-      if (direto.trim() && textoEhRotulo(direto)) return true;
+      if (direto.trim() && ehRotulo(direto)) return true;
     }
     return false;
   }
@@ -70,6 +88,15 @@
     return temAtributoDeAnuncio(cartao) || temRotuloVisivel(cartao) || temLinkDeAnuncio(cartao);
   }
 
+  function ehIA(cartao) {
+    if (!cartao || !cartao.querySelectorAll) return false;
+    if (temRotuloVisivel(cartao, textoEhRotuloIA)) return true;
+    for (const no of cartao.querySelectorAll('[title], [aria-label]')) {
+      if (textoEhRotuloIA(no.getAttribute('title')) || textoEhRotuloIA(no.getAttribute('aria-label'))) return true;
+    }
+    return false;
+  }
+
   // Sobe até o cartão da grade. Prefere o item de grade mais externo que
   // ainda não seja a grade inteira.
   function acharCartao(elemento) {
@@ -87,7 +114,7 @@
     return [...vistos];
   }
 
-  const api = { normalizar, textoEhRotulo, ehPromovido, acharCartao, listarCartoes };
+  const api = { normalizar, textoEhRotulo, textoEhRotuloIA, ehPromovido, ehIA, acharCartao, listarCartoes };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else raiz.PinDetector = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

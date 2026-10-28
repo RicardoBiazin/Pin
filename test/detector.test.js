@@ -21,6 +21,8 @@ test('cada cartão do fixture é classificado como esperado', () => {
   for (const cartao of cartoes) {
     const esperado = cartao.getAttribute('data-esperado') === 'anuncio';
     assert.strictEqual(detector.ehPromovido(cartao), esperado, `cartão ${cartao.id}`);
+    const ia = cartao.getAttribute('data-ia') === 'sim';
+    assert.strictEqual(detector.ehIA(cartao), ia, `IA no cartão ${cartao.id}`);
   }
 });
 
@@ -34,30 +36,47 @@ test('rótulo exige texto curto, não frase que cita a palavra', () => {
   assert.ok(!detector.textoEhRotulo('evento patrocinado pela prefeitura'));
 });
 
+test('selo de IA exige o texto exato', () => {
+  assert.ok(detector.textoEhRotuloIA('Modificado por IA'));
+  assert.ok(detector.textoEhRotuloIA('  AI  modified '));
+  assert.ok(!detector.textoEhRotuloIA('Arte modificado por IA para quarto'));
+  assert.ok(!detector.textoEhRotuloIA(null));
+});
+
 test('acharCartao sobe do <img> até o item da grade', () => {
   const doc = novaPagina(GRADE);
   const img = doc.querySelector('#promovido-ptbr img');
   assert.strictEqual(detector.acharCartao(img).id, 'promovido-ptbr');
 });
 
-test('content.js esconde anúncios, inclusive os que chegam depois (rolagem)', async () => {
+function carregarContent(config) {
   const dom = new JSDOM(`<!doctype html><body>${GRADE}</body>`, { runScripts: 'outside-only', url: 'https://br.pinterest.com/' });
   const { window } = dom;
   let ouvinteMensagem;
   window.chrome = {
     storage: {
-      sync: { get: (_padrao, cb) => cb({ ligado: true, modo: 'esconder' }) },
+      sync: { get: (padrao, cb) => cb({ ...padrao, ...config }) },
       onChanged: { addListener() {} },
     },
     runtime: { onMessage: { addListener: (fn) => { ouvinteMensagem = fn; } } },
   };
   window.eval(fs.readFileSync(path.join(__dirname, '..', 'src', 'detector.js'), 'utf8'));
   window.eval(fs.readFileSync(path.join(__dirname, '..', 'src', 'content.js'), 'utf8'));
+  const contar = () => {
+    let r;
+    ouvinteMensagem({ tipo: 'contagem' }, null, (x) => { r = x; });
+    return r;
+  };
+  return { window, doc: window.document, contar };
+}
 
-  const doc = window.document;
+test('content.js esconde anúncios e põe selo nos de IA, inclusive os que chegam depois', async () => {
+  const { window, doc, contar } = carregarContent({});
   for (const cartao of doc.querySelectorAll('[data-grid-item]')) {
     const oculto = cartao.classList.contains('pin-sem-anuncio-oculto');
     assert.strictEqual(oculto, cartao.getAttribute('data-esperado') === 'anuncio', `cartão ${cartao.id}`);
+    const selo = cartao.classList.contains('pin-sem-anuncio-ia');
+    assert.strictEqual(selo, cartao.getAttribute('data-ia') === 'sim', `selo IA no cartão ${cartao.id}`);
   }
 
   // Simula a rolagem infinita: novo anúncio entra na grade.
@@ -66,8 +85,19 @@ test('content.js esconde anúncios, inclusive os que chegam depois (rolagem)', a
   await new Promise((r) => setTimeout(r, 300));
   assert.ok(doc.getElementById('tardio').classList.contains('pin-sem-anuncio-oculto'));
 
-  let contagem;
-  ouvinteMensagem({ tipo: 'contagem' }, null, (r) => { contagem = r; });
-  assert.strictEqual(contagem.escondidos, 6);
+  assert.deepStrictEqual({ ...contar() }, { escondidos: 7, ia: 3 });
   window.close();
+});
+
+test('content.js com IA em "esconder" oculta os pins de IA; em "nada" não mexe', () => {
+  const esconder = carregarContent({ ia: 'esconder' });
+  assert.ok(esconder.doc.getElementById('ia-ptbr').classList.contains('pin-sem-anuncio-oculto'));
+  assert.ok(!esconder.doc.getElementById('normal-1').classList.contains('pin-sem-anuncio-oculto'));
+  esconder.window.close();
+
+  const nada = carregarContent({ ia: 'nada' });
+  const cartao = nada.doc.getElementById('ia-ptbr');
+  assert.ok(!cartao.classList.contains('pin-sem-anuncio-oculto'));
+  assert.ok(!cartao.classList.contains('pin-sem-anuncio-ia'));
+  nada.window.close();
 });

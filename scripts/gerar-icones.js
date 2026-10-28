@@ -79,3 +79,9 @@ const pasta = path.join(__dirname, '..', 'icons');
 fs.mkdirSync(pasta, { recursive: true });
 for (const t of [16, 48, 128]) fs.writeFileSync(path.join(pasta, `${t}.png`), png(t));
 console.log('Ícones gerados em', pasta);
+
+// Logo 300x300 que a loja do Edge pede; fica fora do zip da extensão.
+const loja = path.join(__dirname, '..', 'loja');
+fs.mkdirSync(loja, { recursive: true });
+fs.writeFileSync(path.join(loja, 'logo-300.png'), png(300));
+console.log('Logo da loja gerado em', loja);

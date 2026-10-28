@@ -7,3 +7,21 @@
   outline-offset: -4px;
   opacity: 0.35 !important;
 }
+
+/* Selo "IA" desenhado com ::after: não insere nó no DOM do React do site.
+   O cartão da grade já é posicionado (absolute), então o selo fica nele. */
+.pin-sem-anuncio-ia::after {
+  content: 'IA';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 5;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #6d28d9;
+  color: #fff;
+  font: 700 12px/1.2 system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
