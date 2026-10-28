@@ -54,3 +54,12 @@ This extension is not affiliated with Pinterest.
 ## Notas para o revisor
 
 The extension only adds CSS classes to Pinterest grid cards (no DOM removal, no network). Detection logic is in src/detector.js with tests in test/. No build step: the zip contains the source as-is.
+
+## Envios
+
+| Loja | Versão | Data | Identificação |
+|---|---|---|---|
+| Firefox (AMO) | 0.2.0 | 28/10/2026 | id `pin-sem-anuncios@biazin.com.br` |
+| Edge Add-ons | 0.2.1 | 28/10/2026 | CRX ID `gmmmcpbkfhloihkpifadpfdenbdbndaa` (link: https://microsoftedge.microsoft.com/addons/detail/gmmmcpbkfhloihkpifadpfdenbdbndaa) |
+
+Edge: a listagem saiu só em English (United States), porque o pacote não declara `default_locale`. Termos de busca usados: pinterest ad blocker, pinterest no ads, hide promoted pins, ai generated pins, ai image label, bloqueador de anuncios, pinterest sem anuncios.
