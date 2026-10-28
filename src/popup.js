@@ -1,7 +1,7 @@
 'use strict';
 
 const ligado = document.getElementById('ligado');
-const marcar = document.getElementById('marcar');
+const opcoesModo = document.querySelectorAll('input[name="modo"]');
 const opcoesIA = document.querySelectorAll('input[name="ia"]');
 const contagem = document.getElementById('contagem');
 
@@ -9,12 +9,14 @@ document.getElementById('versao').textContent = 'v' + chrome.runtime.getManifest
 
 chrome.storage.sync.get({ ligado: true, modo: 'esconder', ia: 'marcar' }, (salvo) => {
   ligado.checked = salvo.ligado;
-  marcar.checked = salvo.modo === 'marcar';
+  for (const opcao of opcoesModo) opcao.checked = opcao.value === salvo.modo;
   for (const opcao of opcoesIA) opcao.checked = opcao.value === salvo.ia;
 });
 
 ligado.addEventListener('change', () => chrome.storage.sync.set({ ligado: ligado.checked }));
-marcar.addEventListener('change', () => chrome.storage.sync.set({ modo: marcar.checked ? 'marcar' : 'esconder' }));
+for (const opcao of opcoesModo) {
+  opcao.addEventListener('change', () => chrome.storage.sync.set({ modo: opcao.value }));
+}
 for (const opcao of opcoesIA) {
   opcao.addEventListener('change', () => chrome.storage.sync.set({ ia: opcao.value }));
 }

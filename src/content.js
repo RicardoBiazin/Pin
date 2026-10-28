@@ -21,9 +21,8 @@
     if (!config.ligado) return;
     const anuncio = cartao.getAttribute(ATRIBUTO) === 'sim';
     const deIA = cartao.getAttribute(ATRIBUTO_IA) === 'sim';
-    if (anuncio) {
-      cartao.classList.add(config.modo === 'marcar' ? CLASSE_MARCADO : CLASSE_OCULTO);
-    }
+    if (anuncio && config.modo === 'esconder') cartao.classList.add(CLASSE_OCULTO);
+    if (anuncio && config.modo === 'marcar') cartao.classList.add(CLASSE_MARCADO);
     if (deIA && config.ia === 'esconder') cartao.classList.add(CLASSE_OCULTO);
     if (deIA && config.ia === 'marcar') cartao.classList.add(CLASSE_IA);
   }

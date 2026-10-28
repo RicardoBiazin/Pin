@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Pin — bloqueador de anúncios para Pinterest",
   "short_name": "Pin",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Esconde os Pins promovidos (anúncios) do Pinterest e sinaliza os pins que o Pinterest marca como feitos por IA. Não coleta dados.",
   "homepage_url": "https://github.com/RicardoBiazin/Pin",
   "permissions": ["storage"],

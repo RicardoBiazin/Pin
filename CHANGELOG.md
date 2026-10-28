@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1 — 2026-10-28
+
+- Popup: anúncios voltam a ter escolha própria — esconder (padrão), só marcar ou não fazer nada — no mesmo formato dos pins de IA. No 0.2.0 só dava para desligar a extensão inteira.
+
 ## 0.2.0 — 2026-10-28
 
 - Selo roxo "IA" nos pins que o Pinterest marca como "Modificado por IA" (ou "AI modified"); no popup dá para escolher selo, esconder ou nada.

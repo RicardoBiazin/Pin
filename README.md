@@ -21,7 +21,7 @@ Extensão para Edge, Chrome e Firefox (Manifest V3) que esconde os Pins promovid
 ## Popup
 
 - **Extensão ligada**: liga ou desliga tudo.
-- **Anúncios → Só marcar (não esconder)**: deixa o anúncio na tela, apagado e com borda vermelha. Serve para conferir a detecção.
+- **Anúncios**: esconder (padrão), só marcar (apagado e com borda vermelha, serve para conferir a detecção) ou não fazer nada.
 - **Pins feitos por IA**: mostrar selo "IA" (padrão), esconder, ou não fazer nada.
 - A contagem mostra quantos anúncios e pins de IA apareceram na aba.
 
@@ -41,7 +41,7 @@ Os cartões recebem classes CSS (`display: none` ou o selo desenhado com `::afte
 
 ## Limitações
 
-O Pinterest muda o HTML com frequência. Se algum anúncio passar, ligue **Só marcar**, inspecione o cartão (F12) e adicione o sinal novo em `src/detector.js` e um caso em `test/fixtures/grade.html`.
+O Pinterest muda o HTML com frequência. Se algum anúncio passar, escolha **Anúncios → Só marcar**, inspecione o cartão (F12) e adicione o sinal novo em `src/detector.js` e um caso em `test/fixtures/grade.html`.
 
 ## Desenvolvimento
 

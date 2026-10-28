@@ -89,6 +89,22 @@ test('content.js esconde anúncios e põe selo nos de IA, inclusive os que chega
   window.close();
 });
 
+test('content.js com anúncio em "marcar" só põe borda; em "nada" deixa o anúncio', () => {
+  const marcar = carregarContent({ modo: 'marcar' });
+  const anuncio = marcar.doc.getElementById('promovido-ptbr');
+  assert.ok(anuncio.classList.contains('pin-sem-anuncio-marcado'));
+  assert.ok(!anuncio.classList.contains('pin-sem-anuncio-oculto'));
+  marcar.window.close();
+
+  const nada = carregarContent({ modo: 'nada' });
+  const intacto = nada.doc.getElementById('promovido-ptbr');
+  assert.ok(!intacto.classList.contains('pin-sem-anuncio-oculto'));
+  assert.ok(!intacto.classList.contains('pin-sem-anuncio-marcado'));
+  // O selo IA continua funcionando com os anúncios liberados.
+  assert.ok(nada.doc.getElementById('ia-ptbr').classList.contains('pin-sem-anuncio-ia'));
+  nada.window.close();
+});
+
 test('content.js com IA em "esconder" oculta os pins de IA; em "nada" não mexe', () => {
   const esconder = carregarContent({ ia: 'esconder' });
   assert.ok(esconder.doc.getElementById('ia-ptbr').classList.contains('pin-sem-anuncio-oculto'));
